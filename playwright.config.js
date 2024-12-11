@@ -1,11 +1,14 @@
 // @ts-check
 const { defineConfig, devices } = require('@playwright/test');
+import dotenv from 'dotenv';
+import path from 'path';
 
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
 // require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+dotenv.config({path: path.resolve(__dirname, '.', '.env')});
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -26,10 +29,12 @@ module.exports = defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
-    baseURL: 'https://www.google.com/',
+    //according the ENVIRONMENT it can open different environment URL
+    baseURL: process.env.ENVIRONMENT==='qa'?'https://www.google.com/':'https://www.google.com/',
     headless: false,
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    //browserName:'chromium'
   },
 
   /* Configure projects for major browsers */
@@ -38,7 +43,7 @@ module.exports = defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-
+    /*
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
@@ -47,7 +52,7 @@ module.exports = defineConfig({
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
-    },
+    },*/
 
     /* Test against mobile viewports. */
     // {
