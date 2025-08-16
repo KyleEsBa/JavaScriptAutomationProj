@@ -3,7 +3,7 @@ import {test} from './Fixtures';
 //import { base } from '../utilities/fixtures';
 //import {test, expect} from '@playwright/test';
 const {AmazonSearchPage}=require('../pages/AmazonSearchPage');
-//Adding a test comment
+
 test('Amazon search', async({page})=>{
     const pageTitle=page.title();
     //await expect(page).toHaveTitle('Amazon.com');
