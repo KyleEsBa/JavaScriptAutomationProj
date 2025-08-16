@@ -6,7 +6,7 @@ const {AmazonSearchPage}=require('../pages/AmazonSearchPage');
 //Adding a test comment
 test('Amazon search', async({page})=>{
     const pageTitle=page.title();
-    await expect(page).toHaveTitle('Amazon.com. Spend less. Smile more.');
+    await expect(page).toHaveTitle('Amazon.com');
     console.log('Page title is: ', pageTitle);
     //await expect(page).toHaveURL('https://www.amazon.com/');
 
