@@ -34,4 +34,7 @@ pipeline {
             }
         }
     }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '4'))
+      }
 }
