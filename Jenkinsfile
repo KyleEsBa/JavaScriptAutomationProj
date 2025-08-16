@@ -33,5 +33,9 @@ pipeline {
                 sh "docker push ${IMAGE_URI}"
             }
         }
+
+        properties([
+          pipelineTriggers([githubPush()])
+        ])
     }
 }
