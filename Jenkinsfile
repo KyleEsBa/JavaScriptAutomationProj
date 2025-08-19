@@ -44,7 +44,10 @@ pipeline {
             }
         }
     }
+    environment {
+        NPM_CONFIG_CACHE="/tmp/.npm-cache"
+    }
     options {
         buildDiscarder(logRotator(numToKeepStr: '4'))
-      }
+    }
 }
