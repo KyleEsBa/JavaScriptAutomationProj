@@ -11,9 +11,9 @@ COPY package*.json ./
 RUN npm install
 
 # After npm install
-RUN mkdir -p /home/jenkins/.npm && chown -R 1000:1000 /home/jenkins/.npm
+#RUN mkdir -p /home/jenkins/.npm && chown -R 1000:1000 /home/jenkins/.npm
 # Or for your user inside container:
-RUN chown -R 1000:1000 /root/.npm || true
+#RUN chown -R 1000:1000 /root/.npm || true
 
 # Copy the rest of your project files (tests, configs, etc.)
 COPY . .

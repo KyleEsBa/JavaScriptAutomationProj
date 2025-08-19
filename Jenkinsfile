@@ -38,6 +38,7 @@ pipeline {
             agent {
                 docker {
                     image "${IMAGE_URI}"
+                    args '-u root'
                 }
             }
             steps {
