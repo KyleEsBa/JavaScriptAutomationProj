@@ -7,6 +7,7 @@ pipeline {
         ECR_REPO = 'playwright_automation_repo'
         IMAGE_TAG = 'latest'
         IMAGE_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${IMAGE_TAG}"
+        NPM_CONFIG_CACHE="/tmp/.npm-cache"
     }
 
     stages {
@@ -43,9 +44,6 @@ pipeline {
                 sh 'npx playwright test'
             }
         }
-    }
-    environment {
-        NPM_CONFIG_CACHE="/tmp/.npm-cache"
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '4'))
