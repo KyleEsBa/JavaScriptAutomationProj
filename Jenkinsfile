@@ -33,6 +33,16 @@ pipeline {
                 sh "docker push ${IMAGE_URI}"
             }
         }
+        stage('Run Playwright Tests') {
+            agent {
+                docker {
+                    image "${IMAGE_URI}"
+                }
+            }
+            steps {
+                sh 'npx playwright test'
+            }
+        }
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '4'))

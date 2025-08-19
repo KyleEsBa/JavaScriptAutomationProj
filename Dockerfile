@@ -14,4 +14,5 @@ RUN npm install
 COPY . .
 
 # Define the default command to run Playwright tests
-CMD ["npx", "playwright", "test"]
+CMD
+#["npx", "playwright", "test"]
