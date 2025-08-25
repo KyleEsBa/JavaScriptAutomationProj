@@ -35,15 +35,12 @@ pipeline {
             }
         }
         stage('Run Playwright Tests') {
-            agent {
-                docker {
-                    image "${IMAGE_URI}"
-                    args '-u root -v /tmp/jenkins_ws:/app'
-                }
-            }
             steps {
-                sh 'npx playwright test'
-            }
+                // Run container with no volume mounts, so it uses only internal image files
+                sh """
+                  docker run --rm -u root ${IMAGE_URI} npx playwright test
+                """
+              }
         }
     }
     options {
