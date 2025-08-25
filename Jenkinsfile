@@ -38,7 +38,7 @@ pipeline {
             agent {
                 docker {
                     image "${IMAGE_URI}"
-                    args '-u root'
+                    args '-u root -v /tmp/jenkins_ws:/app'
                 }
             }
             steps {
