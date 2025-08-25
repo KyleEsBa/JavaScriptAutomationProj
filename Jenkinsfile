@@ -36,10 +36,18 @@ pipeline {
         }
         stage('Run Playwright Tests') {
             steps {
-                // Run container with no volume mounts, so it uses only internal image files
-                sh """
-                  docker run --rm -u root ${IMAGE_URI} npx playwright test
-                """
+                script {
+                        try {
+                            // Run container with no volume mounts, so it uses only internal image files
+                            sh """
+                              docker run --rm -u root ${IMAGE_URI} npx playwright test
+                            """
+                        } catch (err) {
+                            archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+                            currentBuild.result = 'FAILURE'
+                            error("Playwright tests failed. Aborting pipeline.")
+                        }
+                    }
               }
         }
     }
