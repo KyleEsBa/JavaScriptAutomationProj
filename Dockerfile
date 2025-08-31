@@ -3,7 +3,7 @@ FROM jenkins/inbound-agent:latest-jdk17
 
 USER root
 
-# Install system deps needed for Playwright (Ubuntu Jammy base)
+# Install system dependencies needed for Playwright (Ubuntu Jammy base)
 RUN apt-get update && \
     apt-get install -y curl gnupg ca-certificates git unzip wget && \
     curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
