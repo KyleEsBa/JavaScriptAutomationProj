@@ -6,7 +6,7 @@ USER root
 # Install system dependencies safely
 RUN apt-get update && apt-get install -y \
     curl \
-    gnupg2 \
+    gnupg \
     ca-certificates \
     git \
     unzip \
