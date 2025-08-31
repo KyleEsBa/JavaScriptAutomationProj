@@ -1,28 +1,33 @@
-# Base: Jenkins inbound agent (has agent entrypoint & JNLP/WebSocket support)
+# Use Jenkins inbound agent with JDK 17 as base
 FROM jenkins/inbound-agent:latest-jdk17
 
 USER root
 
-# Install system dependencies needed for Playwright (Ubuntu Jammy base)
-RUN apt-get update && \
-    apt-get install -y curl gnupg ca-certificates git unzip wget && \
-    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Install system dependencies safely
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg2 \
+    ca-certificates \
+    git \
+    unzip \
+    wget \
+    software-properties-common \
+ && rm -rf /var/lib/apt/lists/*
 
-# Install Playwright and its browsers
-RUN npm i -g npm@latest && \
-    npm i -g playwright && \
-    npx playwright install --with-deps
+# Install Node.js (using NodeSource setup script)
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+ && apt-get install -y nodejs \
+ && rm -rf /var/lib/apt/lists/*
 
-# Set workdir for Jenkins builds
-WORKDIR /home/jenkins/agent
+# Set working dir
+WORKDIR /app
 
-# Drop back to jenkins user (required by inbound-agent)
-USER jenkins
+# Copy package.json and install deps
+COPY package*.json ./
+RUN npm install
 
-# Copy your project (optional — if you only want agent infra, skip this and let Jenkins checkout)
-# COPY . .
+# Copy rest of your project
+COPY . .
 
-# The ENTRYPOINT/CMD comes from jenkins/inbound-agent base
-# Do NOT override it, or the agent won't register
+# Default command (optional)
+CMD ["npx", "playwright", "test"]
