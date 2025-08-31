@@ -5,7 +5,7 @@ USER root
 
 # Install system deps needed for Playwright (Ubuntu Jammy base)
 RUN apt-get update && \
-    apt-get install -y curl gnupg2 ca-certificates git unzip wget && \
+    apt-get install -y curl gnupg ca-certificates git unzip wget && \
     curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
